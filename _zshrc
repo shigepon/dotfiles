@@ -1,23 +1,85 @@
+export HISTFILE=~/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init -)"
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 autoload history-search-end
 bindkey -v
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-bindkey '^O' history-beginning-search-backward-end
+bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 setopt share_history
 
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=0;46;tw=0;42:ow=0;43'
+export LS_COLORS='di=46;34:ln=01;35:so=01;32:pi=33:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 # 補完候補一覧をカラー表示する設定
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 alias ls="ls --color"
 #lang
 export LANG=ja_JP.UTF-8
+case "$TERM" in
+    linux)
+        export LANG="C" ;;
+    *)
+        export LANG="ja_JP.UTF-8" ;;
+esac
 #prompt
-PROMPT="%/%% "
+PROMPT="%F{yellow}${HOST%% *}%F{white}:%/%% "
 PROMPT2="%_%% "
 SPROMPT="% is correct? [n,y,a,e]: "
+
+function runnako () { mono ~/nadesiko2/nako2-release-beta/cnako2.exe $2 $3 $4 $5 $6 $7 $8 $9 $1; }
+#rhaco
+alias rman='php rhaco3.php -org.rhaco.Man'
+alias pfind='find ./ -type f -name'
+alias -s nako=runnako
+alias -g g='| xargs grep'
+alias -g l='| less'
+function mirror(){
+# rsync -av --exclude-from=ignore -e ssh $2 shigepon@$1:$2
+hoge=$(cd $(dirname $2) && pwd)/$(basename $2)
+if [ -d $hoge ]; then
+	slash='/'
+	hoge=$hoge$slash
+fi
+echo $hoge
+rsync -a $hoge shigepon@$1:$hoge
+}
+function bmirror(){
+# rsync -av --exclude-from=ignore -e ssh $2 shigepon@$1:$2
+hoge=$(cd $(dirname $2) && pwd)/$(basename $2)
+if [ -d $hoge ]; then
+	slash='/'
+	hoge=$hoge$slash
+fi
+echo $hoge
+rsync -a shigepon@$1:$hoge $hoge
+}
+function calc(){
+   echo "scale=5;$1" | bc
+}
+alias rake='noglob bundle exec rake'
+#if [ -z $TMUX ]; then
+#	if $(tmux has-session 2> /dev/null); then
+#		tmux attach
+#	else
+#		tmux
+#	fi
+#fi
+export EDITOR=/usr/bin/vim
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+export PATH="/home/shigepon/.phpenv/bin:$PATH"
+eval "$(phpenv init -)"
+export PATH="/home/shigepon/phantomjs/bin:$PATH"
+#eval "source ~/python/py3/bin/activate"
+## Django Aliases
+alias @="python manage.py"
+alias @r="python manage.py runserver"
+alias @sh="python manage.py shell"
+alias @m="python manage.py migrate"
+alias @sm="python manage.py schemamigration"
+alias  -g demo="192.168.24.64:4649"

@@ -1,0 +1,4 @@
+" よく使うコマンドをSpace起動に
+nnoremap <Space>w :w<CR>
+noremap <Space>s :%s/
+nnoremap <Space>r :!python3 %<CR>
