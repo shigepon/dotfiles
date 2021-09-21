@@ -1,9 +1,11 @@
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init -)"
+if [ -s "$HOME/.pyenv/bin" ]; then
+    export PYENV_ROOT=$HOME/.pyenv
+    export PATH=$PYENV_ROOT/bin:$PATH
+    eval "$(pyenv init -)"
+fi
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 autoload history-search-end
@@ -33,8 +35,6 @@ PROMPT2="%_%% "
 SPROMPT="% is correct? [n,y,a,e]: "
 
 function runnako () { mono ~/nadesiko2/nako2-release-beta/cnako2.exe $2 $3 $4 $5 $6 $7 $8 $9 $1; }
-#rhaco
-alias rman='php rhaco3.php -org.rhaco.Man'
 alias pfind='find ./ -type f -name'
 alias -s nako=runnako
 alias -g g='| xargs grep'
@@ -72,10 +72,11 @@ alias rake='noglob bundle exec rake'
 #fi
 export EDITOR=/usr/bin/vim
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
-export PATH="/home/shigepon/.phpenv/bin:$PATH"
-eval "$(phpenv init -)"
-export PATH="/home/shigepon/phantomjs/bin:$PATH"
-#eval "source ~/python/py3/bin/activate"
+[[ -s "$HOME/phantomjs/bin" ]] && export PATH="$HOME/phantomjs/bin:$PATH"
+[[ -s "$HOME/python/django/" ]] && eval "source $HOME/python/django/bin/activate"
+[[ -s "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+[[ -s "$HOME/.phpenv/bin" ]] && export PATH="$HOME/.phpenv/bin:$PATH"
+[[ -s "$HOME/.phpenv/bin" ]] && eval "$(phpenv init -)"
 ## Django Aliases
 alias @="python manage.py"
 alias @r="python manage.py runserver"
