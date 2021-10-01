@@ -69,8 +69,8 @@ set novisualbell
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲ " デフォルト不可視文字は美しくないのでUnicodeで綺麗に
 
 " Macro setting
-" 入力モード中に素早くeeと入力した場合はESCとみなす
-inoremap ee <Esc>
+" 入力モード中に素早くjjと入力した場合はESCとみなす
+inoremap jj <Esc>
 
 " ESCを二回押すことで検索時ハイライトを消す
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
